@@ -1,4 +1,5 @@
- pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -79,7 +80,7 @@ contract LNDToken is ERC20 {
             }
             return false;
     }
-   function getLand(address _landSeller, uint _landID){
+   function getLand(address _landSeller, uint _landID) public returns (bool){
        if(__lanidlist[_landID].ownerAddress==_landSeller && balanceOf(msg.sender)>=__lanidlist[_landID].value){
                   Land memory myLand = Land(
                   {
