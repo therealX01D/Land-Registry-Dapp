@@ -47,11 +47,7 @@
                 <div class="custom-model-wrap">
                     <div class="pop-up-content-wrap">
                         <table id="lands">
-                            <tr>
-                                <th>Land Id</th>
-                                <th>Lacation</th>
-                                <th>cost</th>
-                            </tr>
+                            
                             <tr>
                                 <td>12335</td>
                                 <td>21 timesqure - Us</td>
@@ -96,16 +92,29 @@
     
     </script>
     <script type="text/javascript">
-
+        let totalnooflands;
+        var lands=new Array();
         $(".Click-here").on('click', function () {
-            var totalnumberoflands;
-           Contract.getNoOfLands((result,error)=>{totalnumberoflands=error.c[0];});
-            var listoflands=new Array();
-            for (let index = 0; index < totalnumberoflands; index++) {
-                Contract.returnLand(index,(result,error)=>{listoflands[index+1]=error; });
-            }
+            $('#lands').empty();
+            Contract.totallandsCounter((ret,err)=>{
+            totalnooflands=parseInt(JSON.parse(JSON.stringify(err)));
+            console.log(totalnooflands);
+            for (let index = 1; index <= totalnooflands; index++) {
+            Contract.__lanidlist(index,(ret,err)=>{
+                lands.push(JSON.parse(JSON.stringify(err)));
+            })
+        }
+        
+        }); 
+        $('#lands').append('<tr><th>Land Id</th><th>Lacation</th><th>cost</th></tr>');
+        for (let index = 0; index < lands.length; index++) {
+            $('#lands').append('<tr><td>'+lands[index][3]+'</td><td>'+lands[index][1]+'</td><td>'+lands[index][2]+'</td></tr>');
+        }
             $(".custom-model-main").addClass('model-open');
         });
+        function getlands(){
+            return Contract
+        }
         $(".close-btn, .bg-overlay").click(function () {
             $(".custom-model-main").removeClass('model-open');
         });

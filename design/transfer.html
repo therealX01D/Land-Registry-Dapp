@@ -6,8 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <link rel="stylesheet" href="./styles/transfer.css" />
-    <script src="./scripts/main.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="../node_modules/web3/dist/web3.min.js"></script>
+   
 </head>
 
 <body>
@@ -24,15 +28,22 @@
                 <h1>Transfer Land</h1>
                 <br>
 
-                <input type="text" placeholder="Buyer Account" />
-                <input type="text" placeholder="Land Id" />
+                <input type="text" placeholder="Buyer Account" id="txt_account" />
+                <input type="text" placeholder="Land Id" id="txt_landid"/>
                 <br>
-                <button class="custom-btn">Transfer</button>
+                <button class="custom-btn" id="transferbtn">Transfer</button>
             </form>
         </div>
 
     </div>
-    
+    <script src="./scripts/main.js"></script>
+<script>
+$("#transferbtn").on('click',() =>{
+    console.log($('#txt_account').val() + $('#txt_landid').val());
+           Contract.transferLand.sendTransaction($('#txt_account').val(), parseInt($('#txt_landid').val()) ,{from: account }, (result,error)=>{console.log(error)});
+   });
+</script>
 </body>
+
 
 </html>
